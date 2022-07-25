@@ -31,8 +31,6 @@ def login_access_token(
     )
     if not user:
         raise HTTPException(status_code=400, detail="Incorrect email or password")
-    elif not crud.user.is_active(user):
-        raise HTTPException(status_code=400, detail="Inactive user")
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     return {
         "access_token": security.create_access_token(
@@ -87,8 +85,7 @@ def reset_password(
             status_code=404,
             detail="The user with this username does not exist in the system.",
         )
-    elif not crud.user.is_active(user):
-        raise HTTPException(status_code=400, detail="Inactive user")
+
     hashed_password = get_password_hash(new_password)
     user.hashed_password = hashed_password
     db.add(user)

@@ -13,7 +13,7 @@ class Permission:
         self.scope = [RoleEnum.SUPER_ADMIN.name]
 
     def validate_permission(
-        self, current_user: models.User = Depends(deps.get_current_active_user)
+        self, current_user: models.User = Depends(deps.get_current_user)
     ):
         if current_user.role.name not in self.scope:
             raise HTTPException(

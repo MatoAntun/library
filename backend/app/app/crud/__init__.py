@@ -1,5 +1,8 @@
 #from .crud_item import item
 from .crud_user import user
+from .crud_book import book
+from .crud_author import author
+from .crud_loan import loan
 
 # For a new basic set of CRUD operations you could just do
 
