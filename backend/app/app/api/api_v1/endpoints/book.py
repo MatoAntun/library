@@ -11,15 +11,13 @@ router = APIRouter()
 
 @router.get("/", response_model=List[schemas.Book])
 def read_books(
-    db: Session = Depends(deps.get_db),
-    skip: int = 0,
-    limit: int = 100,
+    db: Session = Depends(deps.get_db), skip: int = 0, limit: int = 100
 ) -> Any:
     """
     Retrieve books.
     """
     books = crud.book.get_multi(db, skip=skip, limit=limit)
-   
+
     return books
 
 
@@ -29,7 +27,7 @@ def create_book(
     db: Session = Depends(deps.get_db),
     book_in: schemas.BookCreate,
     current_user: models.User = Depends(deps.get_current_user),
-    author_id: int
+    author_id: int,
 ) -> Any:
     """
     Create new book.
@@ -52,7 +50,7 @@ def update_book(
     book = crud.book.get(db=db, id=id)
     if not book:
         raise HTTPException(status_code=404, detail="Book not found")
-    if not crud.user.is_superuser(current_user): #TODO check for user role
+    if not crud.user.is_superuser(current_user):  # TODO check for user role
         raise HTTPException(status_code=400, detail="Not enough permissions")
     book = crud.book.update(db=db, db_obj=book, obj_in=book_in)
     return book
