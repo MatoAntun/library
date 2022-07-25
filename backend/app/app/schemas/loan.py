@@ -33,4 +33,4 @@ class Loan(LoanInDBBase):
 # Properties properties stored in DB
 class LoanInDB(LoanInDBBase):
     created_at: datetime
-    updated_at: datetime
+    returned_at: Optional[datetime]

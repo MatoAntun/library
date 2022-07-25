@@ -32,9 +32,11 @@ def create_book(
     """
     Create new book.
     """
-    book = crud.book.create_with_author(db=db, obj_in=book_in, author_id=author_id)
-    return book
-
+    if not crud.author.get(db, id=author_id):
+        raise HTTPException(status_code=404, detail="Author not found")
+    
+    return crud.book.create_with_author(db=db, obj_in=book_in, author_id=author_id)
+    
 
 @router.put("/{id}", response_model=schemas.Book)
 def update_book(
@@ -52,8 +54,8 @@ def update_book(
         raise HTTPException(status_code=404, detail="Book not found")
     if not crud.user.is_superuser(current_user):  # TODO check for user role
         raise HTTPException(status_code=400, detail="Not enough permissions")
-    book = crud.book.update(db=db, db_obj=book, obj_in=book_in)
-    return book
+    
+    return crud.book.update(db=db, db_obj=book, obj_in=book_in)
 
 
 @router.delete("/{id}", response_model=schemas.Book)
@@ -71,5 +73,5 @@ def delete_book(
         raise HTTPException(status_code=404, detail="Item not found")
     if not crud.user.is_superuser(current_user):
         raise HTTPException(status_code=400, detail="Not enough permissions")
-    book = crud.book.remove(db=db, id=id)
-    return book
+    
+    return crud.book.remove(db=db, id=id)

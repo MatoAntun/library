@@ -13,6 +13,22 @@ from app.schemas.loan import LoanCreate, LoanUpdate
 
 
 class CRUDLoan(CRUDBase[Loan, LoanCreate, LoanUpdate]):
+
+    def get_loan(
+        self, db: Session, *, loan_in: LoanUpdate
+    ) -> List[Loan]:
+        loan = (
+            db.query(self.model)
+            .filter(and_(
+                Loan.user_id == loan_in.user_id,
+                Loan.book_id == loan_in.book_id,
+                )
+            )
+            .filter(Loan.returned_at == None)
+            .first()
+        )
+        return loan
+
     def filter_loans(
         self, db: Session, *, user_id: int
     ) -> List[Loan]:
