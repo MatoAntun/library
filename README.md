@@ -4,7 +4,9 @@
 - Fix and more tests
 - Add docstring and documentation for endpoints
 - Decorators for validation
-- Change littlebit structure and split logic from endpoints to managers
+- Change structure and split Exception handling logic from endpoints to managers
+- Change schemas and generalize loans
+- ...
 
 ## Backend Requirements
 
