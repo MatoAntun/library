@@ -1,5 +1,11 @@
 # library
 
+## Next Steps
+- Fix and more tests
+- Add docstring and documentation for endpoints
+- Decorators for validation
+- Change littlebit structure and split logic from endpoints to managers
+
 ## Backend Requirements
 
 * [Docker](https://www.docker.com/).
