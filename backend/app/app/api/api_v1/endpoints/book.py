@@ -9,6 +9,22 @@ from app.api import deps
 router = APIRouter()
 
 
+@router.get("/search")
+def search_books(
+    search: str = "",
+    db: Session = Depends(deps.get_db),
+    skip: int = 0,
+    limit: int = 100,
+) -> schemas.BookSchema:
+    """
+    Retrieve books.
+    """
+
+    books = crud.book.search(db, search=search)
+
+    return books
+
+
 @router.get("/", response_model=List[schemas.Book])
 def read_books(
     db: Session = Depends(deps.get_db), skip: int = 0, limit: int = 100
@@ -34,9 +50,9 @@ def create_book(
     """
     if not crud.author.get(db, id=author_id):
         raise HTTPException(status_code=404, detail="Author not found")
-    
+
     return crud.book.create_with_author(db=db, obj_in=book_in, author_id=author_id)
-    
+
 
 @router.put("/{id}", response_model=schemas.Book)
 def update_book(
@@ -54,7 +70,7 @@ def update_book(
         raise HTTPException(status_code=404, detail="Book not found")
     if not crud.user.is_superuser(current_user):  # TODO check for user role
         raise HTTPException(status_code=400, detail="Not enough permissions")
-    
+
     return crud.book.update(db=db, db_obj=book, obj_in=book_in)
 
 
@@ -68,10 +84,10 @@ def delete_book(
     """
     Delete an book.
     """
+    if int(current_user.role.value) > 1:
+        raise HTTPException(status_code=400, detail="Not enough permissions")
     book = crud.book.get(db=db, id=id)
     if not book:
-        raise HTTPException(status_code=404, detail="Item not found")
-    if not crud.user.is_superuser(current_user):
-        raise HTTPException(status_code=400, detail="Not enough permissions")
-    
+        raise HTTPException(status_code=404, detail="Book not found")
+
     return crud.book.remove(db=db, id=id)

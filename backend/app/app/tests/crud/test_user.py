@@ -32,6 +32,7 @@ def test_not_authenticate_user(db: Session) -> None:
     user = crud.user.authenticate(db, email=email, password=password)
     assert user is None
 
+
 def test_check_if_user_is_superuser(db: Session) -> None:
     email = random_email()
     password = random_lower_string()

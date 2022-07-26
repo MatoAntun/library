@@ -1,7 +1,8 @@
 from typing import Optional
-from app.models.enums.role import RoleEnum
 
 from pydantic import BaseModel, EmailStr
+
+from app.models.enums.role import RoleEnum
 
 
 # Shared properties

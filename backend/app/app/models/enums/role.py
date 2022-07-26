@@ -1,6 +1,7 @@
 """ Module containing Role enumeration """
 from enum import Enum
 
+
 class RoleEnum(str, Enum):
     """ Role enumeration """
 

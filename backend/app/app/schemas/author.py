@@ -7,9 +7,11 @@ from pydantic import BaseModel
 class AuthorBase(BaseModel):
     name: Optional[str] = None
 
+
 # Properties to receive on author creation
 class AuthorCreate(AuthorBase):
     name: str
+
 
 # Properties to receive on author update
 class AuthorUpdate(AuthorBase):

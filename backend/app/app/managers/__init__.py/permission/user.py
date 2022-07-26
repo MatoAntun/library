@@ -6,5 +6,5 @@ class UserPermission(Permission):
         self.scope = [
             RoleEnum.SUPER_ADMIN.name,
             RoleEnum.LIBRARIAN.name,
-            RoleEnum.USER.name
+            RoleEnum.USER.name,
         ]

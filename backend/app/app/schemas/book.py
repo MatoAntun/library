@@ -8,10 +8,12 @@ class BookBase(BaseModel):
     title: Optional[str] = None
     hard_copies: Optional[str] = None
 
+
 # Properties to receive on book creation
 class BookCreate(BookBase):
     title: str
     hard_copies: int
+
 
 # Properties to receive on book update
 class BookUpdate(BookBase):

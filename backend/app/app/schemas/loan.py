@@ -1,5 +1,5 @@
-from typing import Optional
 from datetime import datetime
+from typing import Optional
 
 from pydantic import BaseModel
 
@@ -9,9 +9,11 @@ class LoanBase(BaseModel):
     user_id: int
     book_id: int
 
+
 # Properties to receive on Loan creation
 class LoanCreate(LoanBase):
     pass
+
 
 # Properties to receive on Loan update
 class LoanUpdate(LoanBase):
@@ -20,7 +22,6 @@ class LoanUpdate(LoanBase):
 
 # Properties shared by models stored in DB
 class LoanInDBBase(LoanBase):
-
     class Config:
         orm_mode = True
 

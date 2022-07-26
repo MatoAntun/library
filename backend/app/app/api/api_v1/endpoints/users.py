@@ -113,3 +113,22 @@ def update_user(
         )
     user = crud.user.update(db, db_obj=user, obj_in=user_in)
     return user
+
+
+@router.delete("/{id}", response_model=schemas.User)
+def delete_user(
+    *,
+    db: Session = Depends(deps.get_db),
+    id: int,
+    current_user: models.User = Depends(deps.get_current_user),
+) -> Any:
+    """
+    Delete an book.
+    """
+    if int(current_user.role.value) > 1:
+        raise HTTPException(status_code=400, detail="Not enough permissions")
+    user = crud.user.get(db=db, id=id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    return crud.user.remove(db=db, id=id)
