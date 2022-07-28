@@ -141,7 +141,7 @@ def read_out_of_stock(
 
 
 @router.delete("/", response_model=schemas.Loan)
-def delete_book(
+def delete_loan(
     *,
     db: Session = Depends(deps.get_db),
     loan_in: schemas.LoanUpdate,
